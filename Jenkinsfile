@@ -15,7 +15,7 @@ pipeline {
         stage('Build') { 
             steps { 
                 script{
-                 app = docker.build("underwater")
+                 app = docker.build("<AWS ECR repo name>")
                 }
             }
         }
@@ -27,7 +27,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script{
-                        docker.withRegistry('http://328237136356.dkr.ecr.us-east-1.amazonaws.com/jenkins-tut', 'ecr:us-east-1:aws-credentials') {
+                        docker.withRegistry('<Your AWS ECR URI>', 'ecr:<AWS zone>:<Name of AWS credentials set in jenkins>') {
                     app.push("${env.BUILD_NUMBER}")
                     app.push("latest")
                     }
